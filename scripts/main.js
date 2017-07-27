@@ -1,7 +1,9 @@
 function init() {
     search_init();
-    three_init();
+    three_start();
     show_routes();
+    load_over();
+    add_keydown_operations();
 }
 
 var show_airports_flag = true;
@@ -95,9 +97,17 @@ function lookfor_info(item) {
         $("div#info_airport p#info_airport_name").html(airport.name);
         $("div#info_airport p#info_airport_city").html(airport.city);
         $("div#info_airport p#info_airport_country").html(airport.country);
-        $("div#info_airport p#info_airport_latitude").html(airport.latitude);
-        $("div#info_airport p#info_airport_longitude").html(airport.longitude);
-        $("div#info_airport p#info_airport_altitude").html(airport.altitude);
+        var la = parseInt(airport.latitude);
+        if(la > 0)
+            $("div#info_airport p#info_airport_latitude").html(la + "°N");
+        else
+            $("div#info_airport p#info_airport_latitude").html(-la + "°S");
+        var lo = parseInt(airport.longitude)
+        if(lo > 0)
+            $("div#info_airport p#info_airport_longitude").html(lo + "°E");
+        else
+            $("div#info_airport p#info_airport_longitude").html(-lo + "°W");
+        $("div#info_airport p#info_airport_altitude").html(airport.altitude + "m");
         $("div#info_airport p#info_airport_timezone").html(airport.timezone);
         //three change
         $("ul#result_ul").children("*").remove();
@@ -182,4 +192,19 @@ function rotate_to(la, lo) {
             group.rotation.y = THREE.Math.degToRad(-90 - lo);
         group.rotation.z = 0;
         orbit_control.reset();
+}
+
+function load_over() {
+    $("div#load_block").hide();
+}
+
+function add_keydown_operations() {
+    document.body.addEventListener("keydown", function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e) {
+            code = e.keyCode;
+            if(code === 13)
+                search();
+        }
+    });
 }

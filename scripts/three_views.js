@@ -1,6 +1,6 @@
 'use strict';
 
-function three_init() {
+function three_start() {
     init_three();
     init_camera();
     init_scene();
@@ -11,7 +11,7 @@ function three_init() {
     animate();
 }
 
-var renderer;
+var renderer, buffet_element;
 function init_three() {
     renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -161,7 +161,7 @@ function init_single_route(la1, lo1, la2, lo2, route_material, i) {
         new THREE.Vector3(pos1.x, pos1.y, pos1.z),
         new THREE.Vector3(pos2.x, pos2.y, pos2.z),
         new THREE.Vector3(pos3.x, pos3.y, pos3.z),
-        new THREE.Vector3(pos4.x, pos4.y, pos4.z),
+        new THREE.Vector3(pos4.x, pos4.y, pos4.z)
     );
 }
 
