@@ -100,6 +100,7 @@ function lookfor_info(item) {
         $("div#info_airport p#info_airport_altitude").html(airport.altitude);
         $("div#info_airport p#info_airport_timezone").html(airport.timezone);
         //three change
+        $("ul#result_ul").children("*").remove();
         airports_group.add(airports_points[item_index[1]]);
         var id = airports[item_index[1]].id;
         for(var i = 0; i < routes.length; ++i) {
@@ -118,6 +119,10 @@ function lookfor_info(item) {
                     })[0];
                     airports_group.add(airports_points[airports.indexOf(src)]);
                 }
+                var item = $("<li></li>");
+                item.html(routes[i].source_name + " -> " + routes[i].destination_name);
+                item.attr("onclick", "lookfor_info(\"route " + i.toString() + "\");");
+                $("ul#result_ul").append(item);
             }
         }
         rotate_to(airports[item_index[1]].latitude, airports[item_index[1]].longitude);
@@ -131,6 +136,7 @@ function lookfor_info(item) {
         //set info
         $("div#info_airline p#info_airline_name").html(airline.name);
         //three change
+        $("ul#result_ul").children("*").remove();
         var id = airlines[item_index[1]].id;
         var rotate_flag = false;
         for(var i = 0; i < routes.length; ++i) {
@@ -149,6 +155,10 @@ function lookfor_info(item) {
                     rotate_to(src.latitude, src.longitude);
                     rotate_flag = true;
                 }
+                var item = $("<li></li>");
+                item.html(routes[i].source_name + " -> " + routes[i].destination_name);
+                item.attr("onclick", "lookfor_info(\"route " + i.toString() + "\");");
+                $("ul#result_ul").append(item);
             }
         }
         //info block change
