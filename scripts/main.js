@@ -1,132 +1,175 @@
-'use strict';
-
-function threeStart() {
-    initThree();
-    initCamera();
-    initScene();
-    initLight();
-    initObject();
-    initControl();
-    window.addEventListener('resize', onWindowResize, false);
-    animate();
+function init() {
+    search_init();
+    three_init();
+    show_routes();
 }
 
-var renderer;
-var width, height;
+var show_airports_flag = true;
+var show_planes_flag = true;
+var show_routes_flag = true;
 
-function initThree() {
-    renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("center").appendChild(renderer.domElement);
-}
-
-var camera;
-
-function initCamera() {
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
-    camera.up.set(0, 1, 0);
-    camera.position.set(0, 0, 800);
-    camera.lookAt(0, 0, 0);
-}
-
-var scene, group;
-
-function initScene() {
-    scene = new THREE.Scene();
-    var background_texture = new THREE.TextureLoader().load("res/img/stars.png");
-    scene.background = background_texture;
-    group = new THREE.Group();
-    scene.add(group);
-}
-
-var hemisphereLight1, hemisphereLight2;
-
-function initLight() {
-    hemisphereLight1 = new THREE.HemisphereLight(0xffffff, 0x333333, 2);
-    hemisphereLight1.position.set(0, 0, -200);
-    group.add(hemisphereLight1);
-    hemisphereLight2 = new THREE.HemisphereLight(0xffffff, 0x333333, 2);
-    hemisphereLight2.position.set(0, 0, 200);
-    group.add(hemisphereLight2);
-}
-
-var earth;
-
-function initObject() {
-    var earthTextureLoader = new THREE.TextureLoader();
-    earthTextureLoader.load('res/img/earth.jpg', function(texture) {
-        var earthGgeometry = new THREE.SphereGeometry(200, 100, 100);
-        var earthMaterial = new THREE.MeshPhongMaterial({
-            shininess:10,
-            map: texture
-        });
-        earth = new THREE.Mesh(earthGgeometry, earthMaterial);
-        earth.position.set(0, 0, 0);
-        group.add(earth);
-        group.rotation.x = THREE.Math.degToRad(35);
-        group.rotation.y = THREE.Math.degToRad(160);
-    });
-
-    var g = new THREE.SphereGeometry(1, 100, 100);
-    var m = new  THREE.MeshBasicMaterial({color: 0xff0000});
-    for(var i = 0; i < airports.length; ++i) {
-        var point = new THREE.Mesh(g, m);
-        var pos = translate_position(airports[i].latitude, airports[i].longitude);
-        point.position.set(pos.x, pos.y, pos.z);
-        console.log(i);
-        group.add(point);
+function show_airports() {
+    if(show_airports_flag) {
+        $("#show_control_item_airports")[0].style.opacity = 0.5;
+        $("img#airport_logo")[0].style.opacity = 0.5;
+        show_airports_flag = false;
+        group.remove(airports_group);
     }
-
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push( new THREE.Vector3( 500, 0, 0 ) );//在x轴上定义两个点p1(-500,0,0)
-    geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );//p2(500,0,0)
-    var line = new THREE.Line(geometry, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 1 } ) );
-    group.add(line);
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push( new THREE.Vector3( 0, 500, 0 ) );//在x轴上定义两个点p1(-500,0,0)
-    geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );//p2(500,0,0)
-    var line2 = new THREE.Line(geometry, new THREE.LineBasicMaterial( { color: 0xffff00, opacity: 1 } ) );
-    group.add(line2);
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push( new THREE.Vector3( 0, 0, 500 ) );//在x轴上定义两个点p1(-500,0,0)
-    geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );//p2(500,0,0)
-    var line3 = new THREE.Line(geometry, new THREE.LineBasicMaterial( { color: 0x00ff00, opacity: 1 } ) );
-    group.add(line3);
-}
-
-var orbitControl;
-
-function initControl() {
-    orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-    orbitControl.target.set(0, 0, 0);
-    orbitControl.minDistrance = 20;
-    orbitControl.maxDistrance = 50;
-    orbitControl.maxPolarAngle = Math.PI;
-}
-
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function translate_position(latitude, longitude) {
-    var a = latitude * (Math.PI / 180);
-    var b = longitude * (Math.PI / 180);
-    return {
-        x: 200 * Math.cos(a) * Math.cos(b),
-        y: 200 * Math.sin(a),
-        z: -200 * Math.cos(a) * Math.sin(b),
+    else {
+        $("#show_control_item_airports")[0].style.opacity = 1;
+        $("img#airport_logo")[0].style.opacity = 1;
+        show_airports_flag = true;
+        group.add(airports_group);
     }
 }
 
-function render() {
-    group.rotation.y -= 0.005;
-    renderer.render(scene, camera);
+function show_planes() {
+    if(show_planes_flag) {
+        $("#show_control_item_planes")[0].style.opacity = 0.5;
+        $("img#plane_logo")[0].style.opacity = 0.5;
+        show_planes_flag = false;
+        group.remove(planes_group);
+    }
+    else {
+        $("#show_control_item_planes")[0].style.opacity = 1;
+        $("img#plane_logo")[0].style.opacity = 1;
+        show_planes_flag = true;
+        group.add(planes_group);
+    }
 }
 
-function animate() {
-    requestAnimationFrame(animate);
-    render();
+function show_routes() {
+    if(show_routes_flag) {
+        $("#show_control_item_routes")[0].style.opacity = 0.5;
+        $("img#route_logo")[0].style.opacity = 0.5;
+        show_routes_flag = false;
+        group.remove(lines_group);
+    }
+    else {
+        $("#show_control_item_routes")[0].style.opacity = 1;
+        $("img#route_logo")[0].style.opacity = 1;
+        show_routes_flag = true;
+        group.add(lines_group);
+    }
+}
+
+function lookfor_info(item) {
+    item_index = item.split(" ");
+    //three clear
+    for(var i = 0; i < airports_points.length; ++i)
+        airports_group.remove(airports_points[i]);
+    for(var i = 0; i < routes.length; ++i)
+        planes_group.remove(planes[i]);
+    for(var i = 0; i < routes.length; ++i)
+        lines_group.remove(route_lines[i]);
+    auto_rotate_flag = false;
+    //info block set
+    if(item_index[0] === "route") {
+        var route = routes[item_index[1]];
+        var src = airports.filter(function(x){
+            return x.id === route.source_id;
+        })[0];
+        var des = airports.filter(function(x){
+            return x.id === route.destination_id;
+        })[0];
+        //set info
+        $("div#info_route p#info_route_source").html(route.source_name);
+        $("div#info_route p#info_route_source_airport").html("(" + src.name + ")");
+        $("div#info_route p#info_route_destination").html(route.destination_name);
+        $("div#info_route p#info_route_destination_airport").html("(" + des.name + ")");
+        $("div#info_route p#info_route_airline").html(route.airline_name);
+        //three change
+        planes_group.add(planes[item_index[1]]);
+        airports_group.add(airports_points[airports.indexOf(src)]);
+        airports_group.add(airports_points[airports.indexOf(des)]);
+        lines_group.add(route_lines[item_index[1]]);
+        rotate_to(src.latitude, src.longitude);
+        //info block change
+        $("#info_airport").hide();
+        $("#info_airline").hide();
+        $("#info_route").show();
+    }
+    else if(item_index[0] === "airport") {
+        var airport = airports[item_index[1]];
+        //set info
+        $("div#info_airport p#info_airport_name").html(airport.name);
+        $("div#info_airport p#info_airport_city").html(airport.city);
+        $("div#info_airport p#info_airport_country").html(airport.country);
+        $("div#info_airport p#info_airport_latitude").html(airport.latitude);
+        $("div#info_airport p#info_airport_longitude").html(airport.longitude);
+        $("div#info_airport p#info_airport_altitude").html(airport.altitude);
+        $("div#info_airport p#info_airport_timezone").html(airport.timezone);
+        //three change
+        airports_group.add(airports_points[item_index[1]]);
+        var id = airports[item_index[1]].id;
+        for(var i = 0; i < routes.length; ++i) {
+            if(routes[i].source_id === id || routes[i].destination_id === id) {
+                planes_group.add(planes[i]);
+                lines_group.add(route_lines[i]);
+                if(routes[i].source_id === id) {
+                    var des = airports.filter(function(x){
+                        return x.id === routes[i].destination_id;
+                    })[0];
+                    airports_group.add(airports_points[airports.indexOf(des)]);
+                }
+                else {
+                    var src = airports.filter(function(x){
+                        return x.id === routes[i].source_id;
+                    })[0];
+                    airports_group.add(airports_points[airports.indexOf(src)]);
+                }
+            }
+        }
+        rotate_to(airports[item_index[1]].latitude, airports[item_index[1]].longitude);
+        //info block change
+        $("#info_route").hide();
+        $("#info_airline").hide();
+        $("#info_airport").show();
+    }
+    else if(item_index[0] === "airline") {
+        var airline = airlines[item_index[1]];
+        //set info
+        $("div#info_airline p#info_airline_name").html(airline.name);
+        //three change
+        var id = airlines[item_index[1]].id;
+        var rotate_flag = false;
+        for(var i = 0; i < routes.length; ++i) {
+            if(routes[i].airline_id === id) {
+                planes_group.add(planes[i]);
+                lines_group.add(route_lines[i]);
+                var src = airports.filter(function(x) {
+                    return x.id === routes[i].source_id;
+                })[0];
+                airports_group.add(airports_points[airports.indexOf(src)]);
+                var des = airports.filter(function(x) {
+                    return x.id === routes[i].destination_id;
+                })[0];
+                airports_group.add(airports_points[airports.indexOf(des)]);
+                if(!rotate_flag) {
+                    rotate_to(src.latitude, src.longitude);
+                    rotate_flag = true;
+                }
+            }
+        }
+        //info block change
+        $("#info_route").hide();
+        $("#info_airport").hide();
+        $("#info_airline").show();
+    }
+    show_airports_flag = false;
+    show_planes_flag = false;
+    show_routes_flag = false;
+    show_airports();
+    show_planes();
+    show_routes();
+}
+
+function rotate_to(la, lo) {
+     group.rotation.x = THREE.Math.degToRad(la);
+        if(lo >= 0)
+            group.rotation.y = THREE.Math.degToRad(270 - lo);
+        else
+            group.rotation.y = THREE.Math.degToRad(-90 - lo);
+        group.rotation.z = 0;
+        orbit_control.reset();
 }

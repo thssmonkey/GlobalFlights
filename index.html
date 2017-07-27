@@ -5,11 +5,74 @@
     <title>Global Flights</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body onload="threeStart()">
-    <div id="center"></div>
+<body onload="init()">
+    <div id="three_center"></div>
+    <p id="title">Global Flights</p>
+    <div id="search_block">
+        <div id="search_choose_bar"></div>
+        <p class="search_item" id="search_item_route" onclick="choose_route()">Route</p>
+        <p class="search_item" id="search_item_airport" onclick="choose_airport()">Airport</p>
+        <p class="search_item" id="search_item_airline" onclick="choose_airline()">Airline</p>
+        <div id="search_route_block">
+            <input type="text" class="search_content" id="search_content_source" placeholder="source" />
+            <input type="text" class="search_content" id="search_content_destination" placeholder="destination" />
+        </div>
+        <input type="text" class="search_content" id="search_content_airport" placeholder="airport" />
+        <input type="text" class="search_content" id="search_content_airline" placeholder="airline" />
+        <img src="res/img/search.png" id="search_button" onclick="search()" />
+    </div>
+    <div id="result_block">
+        <ul id="result_ul"></ul>
+    </div>
+    <div id="info_block">
+        <div id="info_route">
+            <p class="info_title">source</p>
+            <p class="info_content_big" id="info_route_source"></p>
+            <p class="info_content_small" id="info_route_source_airport"></p>
+            <p class="info_title">destination</p>
+            <p class="info_content_big" id="info_route_destination"></p>
+            <p class="info_content_small" id="info_route_destination_airport"></p>
+            <p class="info_title">airline</p>
+            <p class="info_content_middle" id="info_route_airline"></p>
+        </div>
+        <div id="info_airport">
+            <p class="info_title">airport</p>
+            <p class="info_content_middle" id="info_airport_name"></p>
+            <p class="info_title">city</p>
+            <p class="info_content_middle" id="info_airport_city"></p>
+            <p class="info_title">country</p>
+            <p class="info_content_middle" id="info_airport_country"></p>
+            <p class="info_title">latitude</p>
+            <p class="info_content_middle" id="info_airport_latitude"></p>
+            <p class="info_title">longitude</p>
+            <p class="info_content_middle" id="info_airport_longitude"></p>
+            <p class="info_title">altitude</p>
+            <p class="info_content_middle" id="info_airport_altitude"></p>
+            <p class="info_title">time-zone</p>
+            <p class="info_content_middle" id="info_airport_timezone"></p>
+        </div>
+        <div id="info_airline">
+            <p class="info_title">airline</p>
+            <p class="info_content_big" id="info_airline_name">Carill Aviation</p>
+        </div>
+    </div>
+    <div id="show_control_block">
+        <div id="show_control_images">
+            <img class="show_logo" src="res/img/airport.png" id="airport_logo" onclick="show_airports()"/>
+            <img class="show_logo" src="res/img/plane.png" id="plane_logo" onclick="show_planes()"/>
+            <img class="show_logo" src="res/img/route.png" id="route_logo" onclick="show_routes()"/>
+        </div>
+        <p class="show_control_item" id="show_control_tip">SHOW</p>
+        <p class="show_control_item" id="show_control_item_airports" onclick="show_airports()">airports</p>
+        <p class="show_control_item" id="show_control_item_planes" onclick="show_planes()">planes</p>
+        <p class="show_control_item" id="show_control_item_routes" onclick="show_routes()">routes</p>
+    </div>
 </body>
 </html>
 <script src="scripts/threejs/three.min.js"></script>
 <script src="scripts/threejs/OrbitControls.js"></script>
+<script src="scripts/jquery-3.2.1.min.js"></script>
 <script src="scripts/data.js"></script>
+<script src="scripts/three_views.js"></script>
+<script src="scripts/search.js"></script>
 <script src="scripts/main.js"></script>

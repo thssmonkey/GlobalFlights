@@ -7,13 +7,263 @@ html{overflow: hidden;}
 body {
     margin:0; padding:0; border:0;
     min-height: 1000px;
+    min-width: 1000px;
 }
 
-div#center {
+div#three_center {
+    position: absolute;
     width: 100%;
     height: 1000px;
+    z-index: 0;
 }
+
+#search_block {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 300px;
+    height: 200px;
+}
+
+#search_choose_bar {
+    background-color: white;
+    width: 55px;
+    height: 5px;
+    margin-left: 20px;
+    position: relative;
+}
+
+#search_route_block {
+    position: absolute;
+    top: 40px;
+    width: 200px;
+    height: 100px;
+}
+
+#result_block {
+    position: absolute;
+    top: 200px;
+    left: 0px;
+    width: 300px;
+    height: 550px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    border: 1px;
+    background-color: rgba(255, 255, 255, 1);
+}
+::-webkit-scrollbar-thumb:hover {
+    border-radius: 3px;
+    border: 1px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+
+#info_block {
+    position: absolute;
+    right: 30px;
+    top: 100px;
+    width: 350px;
+    height: 500px;
+}
+
+#info_block p {
+    text-align: right;
+}
+
+#info_block p.info_title {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+#info_block p.info_content_big {
+    color: rgba(255, 255, 255, 1);
+    font-size: 45px;
+}
+
+#info_block p.info_content_middle {
+    color: rgba(255, 255, 255, 1);
+    font-size: 25px;
+}
+
+#info_block p.info_content_small {
+    color: rgba(255, 255, 255, 1);
+    font-size: 15px;
+}
+
+#info_route {
+    display: none;
+    width: 100%;
+    height: 100%
+}
+
+#info_airport {
+    display: none;
+    width: 100%;
+    height: 100%
+}
+
+#info_airline {
+    display: none;
+    width: 100%;
+    height: 100%
+}
+
+#show_control_block {
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    width: 400px;
+    height: 100px;
+}
+
+#show_control_images {
+    width: 300px;
+    height: 50px;
+}
+
 canvas {
     width: 100%;
     height: 100%;
+}
+
+p {
+    margin: 0;
+}
+
+#title {
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+.search_item {
+    color: white;
+    float: left;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-size: 20px;
+}
+.search_item:hover {
+    cursor: pointer;
+}
+
+.show_control_title {
+    color: white;
+    float: left;
+    font-size: 20px;
+}
+
+.show_control_item {
+    color: white;
+    float: left;
+    margin-left: 20px;
+    font-size: 20px
+}
+.show_control_item:hover {
+    cursor: pointer;
+}
+.show_control_item#show_control_tip:hover {
+    cursor: auto;
+}
+
+img.show_logo:hover {
+    cursor: pointer;
+}
+
+#airport_logo {
+    position: absolute;
+    right: 240px;
+    top: 10px;
+}
+
+#plane_logo {
+    position: absolute;
+    right: 148px;
+    top: 10px;
+}
+
+#route_logo {
+    position: absolute;
+    right: 70px;
+    top: 10px;
+}
+
+#search_button {
+    position: absolute;
+    top: 80px;
+    right: 0px;
+}
+#search_button:hover {
+    cursor: pointer;
+}
+
+input.search_content {
+    -web-kit-appearance:none;
+    -moz-appearance: none;
+    background: transparent;
+    font-size: 20px;
+    width: 190px;
+    height: 30px;
+    color: white;
+    margin-top: 20px;
+    margin-left: 20px;
+    border-radius: 5px;
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.7);
+    outline: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#search_content_source {
+    position: absolute;
+    left: 5px;
+    top: 0px;
+}
+
+#search_content_destination {
+    position: absolute;
+    left: 5px;
+    top: 55px;
+}
+
+#search_content_airport {
+    position: absolute;
+    left: 5px;
+    top: 65px;
+    display: none;
+}
+
+#search_content_airline {
+    position: absolute;
+    left: 5px;
+    top: 65px;
+    display: none;
+}
+
+ul#result_ul {
+    margin: 0px;
+}
+
+ul#result_ul li {
+    list-style: none;
+    color: white;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
 }
