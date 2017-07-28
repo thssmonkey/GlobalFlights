@@ -1,6 +1,8 @@
 'use strict';
 
 function three_start() {
+    if(!Detector.webgl) Detector.addGetWebGLMessage();
+    
     init_three();
     init_camera();
     init_scene();
@@ -59,6 +61,7 @@ function init_control() {
     orbit_control.minDistrance = 20;
     orbit_control.maxDistrance = 50;
     orbit_control.maxPolarAngle = Math.PI;
+    console.log(orbit_control);
 }
 
 var earth;

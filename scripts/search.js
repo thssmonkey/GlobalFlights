@@ -5,6 +5,7 @@ function search_init() {
     search_choose = 1;
 }
 
+//choose
 function choose_route() {
     set_search_style(1);
 }
